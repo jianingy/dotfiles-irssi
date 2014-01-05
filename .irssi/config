@@ -1,0 +1,164 @@
+settings = {
+  core = {
+    real_name = "Jianing Yang";
+    user_name = "jianingy";
+    nick = "jianingy";
+    recode_out_default_charset = "UTF-8";
+    recode_fallback = "UTF-8";
+    recode = "yes";
+    awaylog_file = "~/.irssi/log/away.log";
+    server_reconnect_time = "15sec";
+    server_connect_timeout = "15sec";
+  };
+  "fe-text" = { actlist_sort = "refnum"; };
+  "fe-common/core" = {
+    beep_when_window_active = "yes";
+    beep_msg_level = "MSGS NOTICES DCC DCCMSGS HILIGHT";
+    bell_beeps = "yes";
+    term_charset = "UTF-8";
+    autolog = "yes";
+    theme = "themes/crshd";
+  };
+  "perl/core/scripts" = {
+    tmux_away_nick = "jianingy_afk";
+    tmux_away_repeat = "15";
+  };
+};
+servers = (
+  {
+    address = "irc.freenode.net";
+    chatnet = "freenode";
+    port = "6667";
+    autoconnect = "yes";
+  }
+);
+
+chatnets = {
+  bitlbee = { type = "IRC"; };
+  freenode = { type = "IRC"; };
+};
+
+channels = (
+  { name = "#ustack"; chatnet = "freenode"; autojoin = "yes"; },
+  { 
+    name = "#openstack-neutron";
+    chatnet = "freenode";
+    autojoin = "yes";
+  }
+);
+
+aliases = {
+  W = "who";
+  N = "names";
+  WI = "whois";
+  T = "topic";
+  K = "kick";
+  M = "msg";
+  C = "clear";
+  KB = "kickban";
+  WC = "window close";
+  RUN = "SCRIPT LOAD";
+  SBAR = "STATUSBAR";
+  Q = "QUERY";
+  WL = "window list";
+  TELNET = "window new hidden;window name telnet;exec -name telnet -nosh -interactive -window telnet $-";
+  WM = "window move";
+};
+
+conversions = { };
+
+logs = { };
+statusbar = {
+  items = {
+    # start/end text in statusbars
+    barstart = "{sbstart}";
+    barend = "{sbend}";
+
+    topicbarstart = "{topicsbstart}";
+    topicbarend = "{topicsbend}";
+
+    # treated "normally", you could change the time/user name to whatever
+    time = "{sb $Z}";
+    user = "{sb {sbnickmode $cumode}$N{sbmode $usermode}{sbaway $A}}";
+
+    # treated specially .. window is printed with non-empty windows,
+    # window_empty is printed with empty windows
+    prompt = "{prompt $winref:$tag/$[.15]itemname}";
+    prompt_empty = "{prompt $winref/$winname}";
+    topic = " $topic";
+    topic_empty = " Irssi v$J - http://www.irssi.org";
+  };
+
+  default = {
+    window = {
+      disabled = "yes";
+      items = {
+        barstart = { priority = "100"; };
+        time = { };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    # statusbar to use in inactive split windows
+    window_inact = {
+      disabled = "yes";
+      type = "window";
+      placement = "bottom";
+      position = "1";
+      visible = "inactive";
+      items = {
+        barstart = { priority = "100"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    # we treat input line as yet another statusbar :) It's possible to
+    # add other items before or after the input line item.
+    prompt = {
+      type = "window";
+      placement = "bottom";
+      # we want to be at the bottom always
+      position = "100";
+      visible = "always";
+      items = {
+        prompt = { priority = "-1"; };
+        prompt_empty = { priority = "-1"; };
+        # treated specially, this is the real input line.
+        input = { priority = "10"; };
+        more = { priority = "-1"; alignment = "right"; };
+        lag = "{sb Lag: $0-}";
+        act = "{sb Act: $0-}";
+      };
+    };
+  };
+};
+windows = {
+  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  2 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "&bitlbee";
+        tag = "bitlbee";
+      }
+    );
+  };
+  3 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#ustack";
+        tag = "ustack";
+      }
+    );
+  };
+};
+hilights = ( { text = "jianingy"; nick = "yes"; word = "no"; } );
